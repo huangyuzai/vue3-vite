@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<script>
+	const obj = {
+		a: 1,
+		b: 2,
+		c: 3
+	}
+	/* Proxy: 代理 */
+	const p = new Proxy(obj, {
+		/* 有人获取属性时调用 */
+		get (target, propName) {
+			console.log(`有人获取了 ${propName} 属性`)
+			console.log(`源数据 `, target)
+			// return target[propName]
+			/* Reflect: 反射 */
+			return Reflect.get(target, propName)
+		},
+		/* 有人设置属性时调用 */
+		set (target, propName, value) {
+			console.log(`有人修改了 ${propName} 属性`)
+			console.log(`更改的数据 `, value)
+			// return target[propName] = value
+			return Reflect.set(target, propName, value)
+		},
+		/* 删除时调用 */
+		deleteProperty (target, propName) {
+			console.log(`有人删除了 ${propName} 属性`)
+			// return delete target[propName]
+			return Reflect.deleteProperty(target, propName)
+		}
+	})
+</script>
+</body>
+</html>
